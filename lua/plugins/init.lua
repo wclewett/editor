@@ -13,13 +13,35 @@ return {
     end,
   },
 
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  {
+  	"nvim-treesitter/nvim-treesitter",
+  	opts = {
+  		ensure_installed = {
+  			"vim", "lua", "vimdoc", "html", "css", "go"
+  		},
+  	},
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function ()
+      require("configs.lspconfig")
+    end,
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    ft = "go",
+    opts = function ()
+      return require("configs.null-ls")
+    end,
+  },
+  {
+    "olexsmir/gopher.nvim",
+    ft = "go",
+    config = function (_, opts)
+      require("gopher").setup(opts)
+    end,
+    build = function ()
+      vim.cmd [[slient! GoInstallDeps]]
+    end
+  }
 }
